@@ -4,12 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js" defer></script>
     <title>Book Library</title>
 </head>
 <body>
     <div id="main">
-        <button class="newBook">NEW BOOK</button>
+        <div id="form">
+            <form>
+                <label for="title">Book Title:</label>
+                <input type="text" id="title" name="title">
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author">
+                <label for="pages">Page Count:</label>
+                <input type="text" id="pages" name="pages">
+                <input type="radio" id="read" name="status" value="yes">
+                <label for="status">Read</label>
+                <input type="radio" id="notRead" name="status" value="no">
+                <label for="status">Not Read</label><br>
+                <button class="addBook">Add Book</button>
+            </form>
+        </div>
+        <div id="table">
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Page Count</th>
+                    <th>Status</th>
+                </tr>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
