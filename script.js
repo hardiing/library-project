@@ -1,9 +1,31 @@
 let myLibrary = [];
+const DEFAULT_DATA = [
+    {
+        name: "Skyward",
+        author: "Brandon Sanderson",
+        pages: "503",
+        read: "Read",
+    },
+    {
+        name: "Starsight",
+        author: "Brandon Sanderson",
+        pages: "457",
+        read: "Read",
+    },
+    {
+        name: "Cytonic",
+        author: "Brandon Sanderson",
+        pages: "432",
+        read: "Not Read",
+    }
+];
 const bookName = document.querySelector("#title");
 const bookAuthor = document.querySelector("#author");
 const pageCount = document.querySelector("#pages");
 const bookStatus = document.querySelector("#status");
 const newBtn = document.querySelector(".addBook");
+const tableBody = document.querySelector("#table-body");
+//const statusBtn = document.querySelector("statusBtn");
 
 function Book(name, author, pages, read) {
     this.name = name;
@@ -15,31 +37,40 @@ function Book(name, author, pages, read) {
     }
 }
 
-let starsight = new Book("Starsight", "Sanderson", 457, "yes");
+/* let starsight = new Book("Starsight", "Sanderson", 457, "Read");
 myLibrary.push(starsight);
-let skyward = new Book("Skyward", "Sanderson", 503, "yes");
+let skyward = new Book("Skyward", "Sanderson", 503, "Read");
 myLibrary.push(skyward);
-let cytonic = new Book("Cytonic", "Sanderson", 500, "no");
-myLibrary.push(cytonic);
+let cytonic = new Book("Cytonic", "Sanderson", 500, "Not Read");
+myLibrary.push(cytonic); */
 
-/* function displayBooks() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        const newDiv = document.createElement("div");
-        let bookInfo = myLibrary[i].card();
-        newDiv.textContent = bookInfo;
-        const currentDiv = document.getElementById("main");
-        document.body.appendChild(newDiv);
+function updateLocalStorage() {
+    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+function checkLocalStorage() {
+    if (localStorage.getItem("myLibrary")) {
+        myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+    } else {
+        myLibrary = DEFAULT_DATA;
     }
-} */
+}
 
 function displayBooks() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        const tableDiv = document.getElementById("table");
-        let bookInfo = myLibrary[i].card();
-        //newDiv.textContent = bookInfo;
-        const currentDiv = document.getElementById("main");
-        //document.body.appendChild(newDiv);
-    }
+    checkLocalStorage();
+    tableBody.innerHTML= "";
+    myLibrary.forEach((book) => {
+        const htmlBook = `
+        <tr>
+            <td>${book.name}</td>
+            <td>${book.author}</td>
+            <td>${book.pages}</td>
+            <td><button class="statusBtn">${book.read}</button></td>
+            <td><button class="deleteBtn">Delete</button></td>
+        </tr>
+        `;
+        tableBody.insertAdjacentHTML("afterbegin", htmlBook);
+    });
 }
 
 function clearForm() {
@@ -55,23 +86,35 @@ function clearForm() {
     }
 }
 
-displayBooks();
+/* statusBtn.addEventListener("click", (e) => {
+    if (book.read == "Read") {
+        book.read = "Not Read";
+    } else {
+        book.read = "Read";
+    }
+}) */
 
 newBtn.addEventListener("click", (e) => {
     let name = document.getElementById("title").value;
     let author = document.getElementById("author").value;
     let pages = document.getElementById("pages").value;
-    let read = document.getElementsByName("status").value;
+    let read = document.getElementsByName("status");
+
+    for (i = 0; i < read.length; i++) {
+        if(read[i].checked) {
+            read = read[i].value;
+        }
+    }
 
     let newBook = new Book(name, author, pages, read);
     myLibrary.push(newBook);
-    const newDiv = document.createElement("div");
-    let bookInfo = newBook.card();
-    newDiv.textContent = bookInfo;
-    const currentDiv = document.getElementById("main");
-    document.body.appendChild(newDiv);
+    updateLocalStorage();
     e.preventDefault();
     clearForm();
+    displayBooks();
 });
+
+console.log(myLibrary);
+displayBooks();
 
 
