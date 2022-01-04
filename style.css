@@ -1,0 +1,25 @@
+#pages {
+    width: 50px;
+}
+
+#table {
+    display: flex;
+    flex-direction: row;
+    flex-basis: auto;
+    padding: 5px;
+    margin: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+th {
+    width: 250px;
+}
+
+tr {
+    width: 250px;
+}
+
+td {
+    text-align: center;
+}
