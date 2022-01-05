@@ -25,7 +25,19 @@ const pageCount = document.querySelector("#pages");
 const bookStatus = document.querySelector("#status");
 const newBtn = document.querySelector(".addBook");
 const tableBody = document.querySelector("#table-body");
-//const statusBtn = document.querySelector("statusBtn");
+const table = document.querySelector("table")
+    .addEventListener("click", (e) => {
+        const currentBook = e.target.parentNode.parentNode.childNodes[1];
+        if (e.target.innerHTML == "Delete") {
+            if (confirm(`Are you sure you want to delete ${currentBook.innerText}?`))
+            deleteBook(findBook(myLibrary, currentBook.innerText));
+        }
+        if (e.target.classList.contains("statusBtn")) {
+            changeStatus(findBook(myLibrary, currentBook.innerText));
+        }
+        updateLocalStorage();
+        displayBooks();
+    })
 
 function Book(name, author, pages, read) {
     this.name = name;
@@ -53,6 +65,29 @@ function checkLocalStorage() {
         myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
     } else {
         myLibrary = DEFAULT_DATA;
+    }
+}
+
+function changeStatus(book) {
+    if (myLibrary[book].read === "Read") {
+        myLibrary[book].read = "Not Read"
+    } else {
+        myLibrary[book].read = "Read";
+    }
+}
+
+function deleteBook(currentBook) {
+    myLibrary.splice(currentBook, currentBook + 1);
+}
+
+function findBook(libraryArray, name) {
+    if (libraryArray.length === 0 || libraryArray === null) {
+        return;
+    }
+    for (book of libraryArray) {
+        if (book.name === name) {
+            return libraryArray.indexOf(book);
+        }
     }
 }
 
