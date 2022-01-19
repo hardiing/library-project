@@ -19,11 +19,31 @@ const DEFAULT_DATA = [
         read: "Not Read",
     }
 ];
+
 const bookName = document.querySelector("#title");
 const bookAuthor = document.querySelector("#author");
 const pageCount = document.querySelector("#pages");
 const bookStatus = document.querySelector("#status");
-const newBtn = document.querySelector(".addBook");
+const newBtn = document.querySelector(".addBook")
+    .addEventListener("click", (e) => {
+        let name = document.getElementById("title").value;
+        let author = document.getElementById("author").value;
+        let pages = document.getElementById("pages").value;
+        let read = document.getElementsByName("status");
+    
+        for (i = 0; i < read.length; i++) {
+            if(read[i].checked) {
+                read = read[i].value;
+            }
+        }
+    
+        let newBook = new Book(name, author, pages, read);
+        myLibrary.push(newBook);
+        updateLocalStorage();
+        e.preventDefault();
+        clearForm();
+        displayBooks();
+    });
 const tableBody = document.querySelector("#table-body");
 const table = document.querySelector("table")
     .addEventListener("click", (e) => {
@@ -39,15 +59,18 @@ const table = document.querySelector("table")
         displayBooks();
     })
 
-function Book(name, author, pages, read) {
-    this.name = name;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.card = function() {
-        return name + " by " + author + ", " + pages + ", " + read;
+class Book {
+
+    constructor(name, author, pages, read) {
+        this.name = name;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.card = function() {
+            return name + " by " + author + ", " + pages + ", " + read;
+        }
     }
-}
+}   
 
 /* let starsight = new Book("Starsight", "Sanderson", 457, "Read");
 myLibrary.push(starsight);
@@ -68,11 +91,11 @@ function checkLocalStorage() {
     }
 }
 
-function changeStatus(book) {
-    if (myLibrary[book].read === "Read") {
-        myLibrary[book].read = "Not Read"
+function changeStatus(Book) {
+    if (myLibrary[Book].read === "Read") {
+        myLibrary[Book].read = "Not Read"
     } else {
-        myLibrary[book].read = "Read";
+        myLibrary[Book].read = "Read";
     }
 }
 
@@ -84,9 +107,9 @@ function findBook(libraryArray, name) {
     if (libraryArray.length === 0 || libraryArray === null) {
         return;
     }
-    for (book of libraryArray) {
-        if (book.name === name) {
-            return libraryArray.indexOf(book);
+    for (Book of libraryArray) {
+        if (Book.name === name) {
+            return libraryArray.indexOf(Book);
         }
     }
 }
@@ -94,13 +117,13 @@ function findBook(libraryArray, name) {
 function displayBooks() {
     checkLocalStorage();
     tableBody.innerHTML= "";
-    myLibrary.forEach((book) => {
+    myLibrary.forEach((Book) => {
         const htmlBook = `
         <tr>
-            <td>${book.name}</td>
-            <td>${book.author}</td>
-            <td>${book.pages}</td>
-            <td><button class="statusBtn">${book.read}</button></td>
+            <td>${Book.name}</td>
+            <td>${Book.author}</td>
+            <td>${Book.pages}</td>
+            <td><button class="statusBtn">${Book.read}</button></td>
             <td><button class="deleteBtn">Delete</button></td>
         </tr>
         `;
@@ -121,6 +144,30 @@ function clearForm() {
     }
 }
 
+displayBooks();
+
+/*     newBtn.addEventListener("click", (e) => {
+        let name = document.getElementById("title").value;
+        let author = document.getElementById("author").value;
+        let pages = document.getElementById("pages").value;
+        let read = document.getElementsByName("status");
+    
+        for (i = 0; i < read.length; i++) {
+            if(read[i].checked) {
+                read = read[i].value;
+            }
+        }
+    
+        let newBook = new Book(name, author, pages, read);
+        myLibrary.push(newBook);
+        updateLocalStorage();
+        e.preventDefault();
+        clearForm();
+        displayBooks();
+    }); */
+    
+    //displayBooks();
+
 /* statusBtn.addEventListener("click", (e) => {
     if (book.read == "Read") {
         book.read = "Not Read";
@@ -129,27 +176,6 @@ function clearForm() {
     }
 }) */
 
-newBtn.addEventListener("click", (e) => {
-    let name = document.getElementById("title").value;
-    let author = document.getElementById("author").value;
-    let pages = document.getElementById("pages").value;
-    let read = document.getElementsByName("status");
 
-    for (i = 0; i < read.length; i++) {
-        if(read[i].checked) {
-            read = read[i].value;
-        }
-    }
-
-    let newBook = new Book(name, author, pages, read);
-    myLibrary.push(newBook);
-    updateLocalStorage();
-    e.preventDefault();
-    clearForm();
-    displayBooks();
-});
-
-console.log(myLibrary);
-displayBooks();
 
 
