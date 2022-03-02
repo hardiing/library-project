@@ -13,14 +13,14 @@
         <div id="form">
             <form>
                 <label for="title">Book Title:</label>
-                <input type="text" id="title" name="title">
+                <input type="text" id="title" name="title" required>
                 <label for="author">Author:</label>
-                <input type="text" id="author" name="author">
+                <input type="text" id="author" name="author" required>
                 <label for="pages">Page Count:</label>
-                <input type="text" id="pages" name="pages">
-                <input type="radio" id="read" name="status" value="Read">
+                <input type="number" min="1" max="9999" id="pages" name="pages" required>
+                <input type="radio" required name="status" id="read" name="status" value="Read">
                 <label for="status">Read</label>
-                <input type="radio" id="notRead" name="status" value="Not Read">
+                <input type="radio" required name="status" id="notRead" name="status" value="Not Read">
                 <label for="status">Not Read</label>&emsp;
                 <button class="addBook">Add Book</button>
             </form>
