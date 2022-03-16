@@ -72,13 +72,6 @@ class Book {
     }
 }   
 
-/* let starsight = new Book("Starsight", "Sanderson", 457, "Read");
-myLibrary.push(starsight);
-let skyward = new Book("Skyward", "Sanderson", 503, "Read");
-myLibrary.push(skyward);
-let cytonic = new Book("Cytonic", "Sanderson", 500, "Not Read");
-myLibrary.push(cytonic); */
-
 function updateLocalStorage() {
     localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 }
@@ -145,36 +138,6 @@ function clearForm() {
 }
 
 displayBooks();
-
-/*     newBtn.addEventListener("click", (e) => {
-        let name = document.getElementById("title").value;
-        let author = document.getElementById("author").value;
-        let pages = document.getElementById("pages").value;
-        let read = document.getElementsByName("status");
-    
-        for (i = 0; i < read.length; i++) {
-            if(read[i].checked) {
-                read = read[i].value;
-            }
-        }
-    
-        let newBook = new Book(name, author, pages, read);
-        myLibrary.push(newBook);
-        updateLocalStorage();
-        e.preventDefault();
-        clearForm();
-        displayBooks();
-    }); */
-    
-    //displayBooks();
-
-/* statusBtn.addEventListener("click", (e) => {
-    if (book.read == "Read") {
-        book.read = "Not Read";
-    } else {
-        book.read = "Read";
-    }
-}) */
 
 
 
